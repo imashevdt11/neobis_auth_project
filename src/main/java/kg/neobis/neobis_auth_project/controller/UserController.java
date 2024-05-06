@@ -7,7 +7,9 @@ import kg.neobis.neobis_auth_project.service.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +23,11 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequest request) {
-        return ResponseEntity.ok(userService.register(request));
+    public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequest request, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body("Validation error: " + result.getAllErrors());
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.register(request));
     }
 
     @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})

@@ -3,6 +3,7 @@ package kg.neobis.neobis_auth_project.service.impl;
 import kg.neobis.neobis_auth_project.dto.RegistrationRequest;
 import kg.neobis.neobis_auth_project.entity.ConfirmationToken;
 import kg.neobis.neobis_auth_project.entity.User;
+import kg.neobis.neobis_auth_project.exception.UserAlreadyExistsException;
 import kg.neobis.neobis_auth_project.repository.ConfirmationTokenRepository;
 import kg.neobis.neobis_auth_project.repository.UserRepository;
 import kg.neobis.neobis_auth_project.service.EmailService;
@@ -10,6 +11,7 @@ import kg.neobis.neobis_auth_project.service.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +37,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> register(RegistrationRequest request) {
 
         if (userRepository.existsUserByEmail(request.getEmail())) {
-            return ResponseEntity.badRequest().body("Error: Email is already in use!");
+            throw new UserAlreadyExistsException("Error: Email is already in use!", HttpStatus.CONFLICT.value());
         }
 
         User user = User.builder()
