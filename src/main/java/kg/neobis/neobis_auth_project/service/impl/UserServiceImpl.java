@@ -55,7 +55,11 @@ public class UserServiceImpl implements UserService {
         }
 
         if (!user.isEnabled()) {
-            ConfirmationToken confirmationToken = generateConfirmationToken(user);
+            ConfirmationToken confirmationToken = confirmationTokenRepository.findByUser(user);
+            confirmationToken.setToken(UUID.randomUUID().toString());
+            confirmationToken.setCreated_date(new Date());
+            confirmationToken.setExpiry_date(ConfirmationToken.calculateExpiryDate());
+            confirmationTokenRepository.save(confirmationToken);
             SimpleMailMessage simpleMailMessage = emailService.createMail(user, confirmationToken);
             emailService.sendEmail(simpleMailMessage);
             throw new UserNotVerifiedException("Your account is not verified. Verification link has been sent to your email.", HttpStatus.FORBIDDEN.value());
