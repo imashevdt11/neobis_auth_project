@@ -50,7 +50,7 @@ public class ConfirmationToken {
         this.expiry_date = calculateExpiryDate();
     }
 
-    private Date calculateExpiryDate() {
+    public static Date calculateExpiryDate() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.MINUTE, 5);
