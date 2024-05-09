@@ -1,15 +1,16 @@
 package kg.neobis.neobis_auth_project.exception;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ErrorResponse {
-
-    private Integer status;
-
-    private String message;
+    Integer status;
+    String message;
 }
