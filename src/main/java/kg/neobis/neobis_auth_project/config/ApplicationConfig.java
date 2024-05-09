@@ -1,17 +1,17 @@
 package kg.neobis.neobis_auth_project.config;
 
-import kg.neobis.neobis_auth_project.repository.UserRepository;
 import kg.neobis.neobis_auth_project.exception.UserNotFoundException;
-
-import lombok.RequiredArgsConstructor;
+import kg.neobis.neobis_auth_project.repository.UserRepository;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +27,11 @@ public class ApplicationConfig {
     public UserDetailsService userDetailsService() {
         return username -> repository.findUserByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User '" + username + "' not found", HttpStatus.NOT_FOUND.value()));
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
     @Bean

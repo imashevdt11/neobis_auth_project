@@ -26,3 +26,6 @@ spring:
           auth: true
           starttls:
             enable: true
+jwt:
+  secret: c8Dboxr7plcET25mrUsxO92IIet4bzpKN8lck51PimMA9Kiukq0Qau1rtA7txc18
+  expiration: 3600000
