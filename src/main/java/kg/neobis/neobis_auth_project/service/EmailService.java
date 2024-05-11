@@ -28,7 +28,7 @@ public class EmailService {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Email Verification");
         mailMessage.setText("To confirm your account, please click here : "
-                + "https://207.154.255.31/confirm-account?token=" + confirmationToken.getToken());
+                + "http://207.154.255.31:8085/confirm-account?token=" + confirmationToken.getToken());
 
         return mailMessage;
     }
