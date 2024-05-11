@@ -2,9 +2,9 @@ server:
   port: 8085
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/neobis_auth
+    url: jdbc:postgresql://207.154.255.31:5432/auth
     username: postgres
-    password: ronaldinho80
+    password: digitalocean
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
