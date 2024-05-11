@@ -28,7 +28,7 @@ public class EmailService {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Email Verification");
         mailMessage.setText("To confirm your account, please click here : "
-                + "http://localhost:8085/confirm-account?token=" + confirmationToken.getToken());
+                + "https://neobis-auth-project-e28eca5cdfcc.herokuapp.com/confirm-account?token=" + confirmationToken.getToken());
 
         return mailMessage;
     }
